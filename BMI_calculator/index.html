@@ -43,6 +43,35 @@
       margin-top: 20px;
       font-weight: bold;
     }
+
+    #scale {
+      margin-top: 20px;
+      width: 100%;
+      height: 20px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    #color-bar {
+      height: 100%;
+      transition: width 0.5s ease-in-out;
+    }
+
+    .low {
+      background-color: #4caf50; /* Green */
+    }
+
+    .normal {
+      background-color: #ffeb3b; /* Yellow */
+    }
+
+    .high {
+      background-color: #ff9800; /* Orange */
+    }
+
+    .very-high {
+      background-color: #f44336; /* Red */
+    }
   </style>
 </head>
 <body>
@@ -58,6 +87,10 @@
   <button onclick="calculateBMI()">Calculate BMI</button>
 
   <div id="result"></div>
+
+  <div id="scale">
+    <div id="color-bar" class="low"></div>
+  </div>
 </div>
 
 <script>
@@ -72,6 +105,27 @@
 
     var bmi = weight / ((height / 100) ** 2);
     document.getElementById('result').innerText = 'Your BMI is: ' + bmi.toFixed(2);
+
+    // Update color scale based on BMI value
+    updateColorScale(bmi);
+  }
+
+  function updateColorScale(bmi) {
+    var colorBar = document.getElementById('color-bar');
+
+    if (bmi < 18.5) {
+      colorBar.className = 'low';
+    } else if (bmi < 25) {
+      colorBar.className = 'normal';
+    } else if (bmi < 30) {
+      colorBar.className = 'high';
+    } else {
+      colorBar.className = 'very-high';
+    }
+
+    // Adjust the width of the color bar based on BMI value
+    var percentage = Math.min(100, (bmi / 40) * 100);
+    colorBar.style.width = percentage + '%';
   }
 </script>
 
